@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>【世界之外】天若有情 / 舊影時敘代購清單</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            max-width: 680px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #f4f6f8;
+            color: #333;
+        }
+        .container {
+            background: #ffffff;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
+        }
+        h2 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 25px;
+            border-bottom: 2px solid #e9ecef;
+            padding-bottom: 12px;
+            font-size: 1.5em;
+        }
+        .item-card {
+            margin-bottom: 30px;
+            padding-bottom: 25px;
+            border-bottom: 1px dashed #ced4da;
+        }
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 12px;
+        }
+        .item-title {
+            font-weight: bold;
+            font-size: 1.2em;
+            color: #1a252f;
+            line-height: 1.4;
+        }
+        .item-price {
+            color: #d9534f;
+            font-weight: bold;
+            font-size: 1.3em;
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+        /* 滿版大圖容器 */
+        .item-img-container {
+            width: 100%;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .item-img {
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            border-radius: 10px;
+            border: 1px solid #e9ecef;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
+        }
+        /* 角色選擇區域 (兩欄排版: 上2人, 下2人) */
+        .sub-items {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px 20px;
+            background: #fafafa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #f0f0f0;
+        }
+        .sub-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.05em;
+        }
+        .sub-item label {
+            color: #333;
+            font-weight: 500;
+        }
+        .sub-item input {
+            width: 60px;
+            height: 36px;
+            padding: 2px 5px;
+            text-align: center;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 1.05em;
+        }
+
+        /* 試算與明細顯示區 */
+        .result-box {
+            background: #fff3cd;
+            border: 1px solid #ffeeba;
+            padding: 20px;
+            margin-top: 30px;
+            border-radius: 10px;
+        }
+        .cart-summary {
+            background: #ffffff;
+            border: 1px solid #ffe8a1;
+            border-radius: 6px;
+            padding: 12px 15px;
+            margin-bottom: 18px;
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #495057;
+        }
+        .cart-summary-title {
+            font-weight: bold;
+            color: #856404;
+            margin-bottom: 6px;
+            border-bottom: 1px dashed #ffe8a1;
+            padding-bottom: 4px;
+        }
+        .cart-item-line {
+            margin-bottom: 4px;
+            word-break: break-all;
+        }
+        .result-line {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+        .result-line.total {
+            margin-top: 5px;
+            padding-top: 10px;
+            border-top: 1px dashed #ffe8a1;
+        }
+        .price-highlight {
+            color: #c0392b;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+        .deposit-highlight {
+            color: #27ae60;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        .balance-highlight {
+            color: #2980b9;
+            font-size: 1.25em;
+            font-weight: bold;
+        }
+        .bank-info {
+            background: #eef7ff;
+            padding: 18px;
+            border-radius: 8px;
+            border-left: 5px solid #007bff;
+            margin-top: 20px;
+            font-size: 1em;
+            line-height: 1.6;
+        }
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.15em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 25px;
+            transition: background 0.2s;
+        }
+        .submit-btn:disabled {
+            background-color: #adb5bd;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 480px) {
+            .sub-items {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+                padding: 10px;
+            }
+            .sub-item {
+                font-size: 0.95em;
+            }
+            .sub-item input {
+                width: 50px;
+                height: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>【世界之外】天若有情 / 舊影時敘代購下單</h2>
+
+    <div id="itemList"></div>
+
+    <div class="result-box">
+        <div class="cart-summary">
+            <div class="cart-summary-title">🛒 已選擇商品明細：</div>
+            <div id="cartDetailsList" style="color: #6c757d; font-style: italic;">尚未選擇任何商品</div>
+        </div>
+
+        <div class="result-line">
+            <span>訂單應付總金額：</span>
+            <span class="price-highlight" id="totalPrice">NT$ 0</span>
+        </div>
+        <div class="result-line">
+            <span>本次須匯款金額 (50% 訂金)：</span>
+            <span class="deposit-highlight" id="depositPrice">NT$ 0</span>
+        </div>
+        <div class="result-line">
+            <span>二補/餘款賣場金額：</span>
+            <span class="balance-highlight" id="balancePrice">NT$ 0</span>
+        </div>
+        <div class="result-line total">
+            <span style="font-size: 0.9em; color: #856404;">驗算檢查 (訂金 + 餘款)：</span>
+            <span style="font-size: 0.9em; font-weight: bold; color: #856404;" id="checkSum">NT$ 0</span>
+        </div>
+        <p style="font-size: 0.85em; color: #856404; margin: 10px 0 0 0;">
+            * 計算公式：(商品人民幣總額 × 5) + 40 運費服務費。<br>
+            * 訂金採用無條件捨去取整，餘款 = 總額 - 訂金，確保金額 100% 精確不重複收費。
+        </p>
+    </div>
+
+    <div class="bank-info">
+        <b>【匯款帳號資訊】</b><br>
+        銀行代碼：822 (中國信託)<br>
+        帳號：381540568093<br>
+        戶名：李易蓉<br>
+        <span style="color: #c0392b; font-size: 0.9em; font-weight: bold;">
+            * 請於填表後完成匯款，並於匯款備註留言世界之外，截圖上傳後續表單
+        </span>
+    </div>
+
+    <button id="orderBtn" class="submit-btn" onclick="sendOrder()" disabled>請選擇商品數量</button>
+</div>
+
+<script>
+    const products = [
+        { sort: 1, name: "【預售】世界之外 舊影時敘常駐系列 橢圓徽章", price: 16, img: "https://i.ibb.co/1GzBxjpy/378017-0.jpg" },
+        { sort: 2, name: "【預售】世界之外 舊影時敘常駐系列 合影套組", price: 28, img: "https://i.ibb.co/20vKC8NZ/378018-0.jpg" },
+        { sort: 3, name: "【預售】世界之外 舊影時敘常駐系列 角色立牌", price: 69, img: "https://i.ibb.co/JFKfz9v9/378021-0.jpg" },
+        { sort: 4, name: "【預售】世界之外 天若有情常駐系列 馬口鐵徽章", price: 16, img: "https://i.ibb.co/BV8v0Q61/378014-0.jpg" },
+        { sort: 5, name: "【預售】世界之外 天若有情常駐系列 壓克力掛件", price: 35, img: "https://i.ibb.co/JjjJnyMy/378015-0.jpg" },
+        { sort: 6, name: "【預售】世界之外 天若有情常駐系列 相框擺件", price: 75, img: "https://i.ibb.co/JRtG58k8/378020-0.jpg" },
+        { sort: 7, name: "【預售】世界之外 天若有情常駐系列 資料夾", price: 19, img: "https://i.ibb.co/5W5xLxgc/378019-0.jpg" },
+        { sort: 8, name: "【預售】世界之外 天若有情常駐系列 鐳射票", price: 10, img: "https://i.ibb.co/r2KMSMNh/378022-0.jpg" },
+        { sort: 9, name: "【預售】世界之外 天若有情常駐系列 側影卡套組", price: 20, img: "https://i.ibb.co/3mW3X8x0/378023-0.jpg" }
+    ];
+
+    const characters = ["顧時夜", "易遇", "柏源", "夏蕭因"];
+
+    function renderProducts() {
+        const container = document.getElementById('itemList');
+        let html = '';
+
+        products.forEach(p => {
+            html += `
+                <div class="item-card">
+                    <div class="item-header">
+                        <span class="item-title">${p.sort}. ${p.name}</span>
+                        <span class="item-price">¥ ${p.price}</span>
+                    </div>
+                    
+                    <div class="item-img-container">
+                        <img src="${p.img}" alt="${p.name}" class="item-img">
+                    </div>
+
+                    <div class="sub-items">
+            `;
+
+            characters.forEach((char, cIdx) => {
+                const inputId = `p_${p.sort}_c_${cIdx}`;
+                html += `
+                    <div class="sub-item">
+                        <label for="${inputId}">${cIdx + 1}. ${char}</label>
+                        <input type="number" id="${inputId}" min="0" value="0" onchange="calculate()">
+                    </div>
+                `;
+            });
+
+            html += `
+                    </div>
+                </div>
+            `;
+        });
+
+        container.innerHTML = html;
+    }
+
+    let summaryText = "";
+
+    function calculate() {
+        let totalRmb = 0;
+        let selectedDetails = [];
+        let htmlDisplayDetails = [];
+
+        products.forEach(p => {
+            let itemCharDetails = [];
+            characters.forEach((char, cIdx) => {
+                const inputId = `p_${p.sort}_c_${cIdx}`;
+                const qty = parseInt(document.getElementById(inputId).value) || 0;
+                if (qty > 0) {
+                    totalRmb += p.price * qty;
+                    itemCharDetails.push(`${char}*${qty}`);
+                }
+            });
+            if (itemCharDetails.length > 0) {
+                selectedDetails.push(`${p.sort}. ${p.name} [${itemCharDetails.join(' ')}]`);
+                htmlDisplayDetails.push(`<div class="cart-item-line"><b>${p.sort}. ${p.name}</b>：${itemCharDetails.join(' ')}</div>`);
+            }
+        });
+
+        const btn = document.getElementById('orderBtn');
+        const cartDisplay = document.getElementById('cartDetailsList');
+
+        if (totalRmb === 0) {
+            cartDisplay.innerHTML = `<span style="color: #6c757d; font-style: italic;">尚未選擇任何商品</span>`;
+            document.getElementById('totalPrice').innerText = "NT$ 0";
+            document.getElementById('depositPrice').innerText = "NT$ 0";
+            document.getElementById('balancePrice').innerText = "NT$ 0";
+            document.getElementById('checkSum').innerText = "NT$ 0";
+            btn.disabled = true;
+            btn.innerText = "請選擇商品數量";
+            return;
+        }
+
+        cartDisplay.innerHTML = htmlDisplayDetails.join('');
+
+        const totalNTD = Math.round((totalRmb * 5) + 40);
+        const depositNTD = Math.floor(totalNTD / 2);
+        const balanceNTD = totalNTD - depositNTD;
+
+        document.getElementById('totalPrice').innerText = `NT$ ${totalNTD.toLocaleString()}`;
+        document.getElementById('depositPrice').innerText = `NT$ ${depositNTD.toLocaleString()}`;
+        document.getElementById('balancePrice').innerText = `NT$ ${balanceNTD.toLocaleString()}`;
+        document.getElementById('checkSum').innerText = `NT$ ${(depositNTD + balanceNTD).toLocaleString()}`;
+
+        summaryText = `【購買明細】${selectedDetails.join(' | ')} ｜ 【總額】NT$${totalNTD} ｜ 【本次匯款訂金】NT$${depositNTD} ｜ 【二補餘款賣場】NT$${balanceNTD}`;
+
+        btn.disabled = false;
+        btn.innerText = "確認訂單，前往上傳匯款截圖";
+    }
+
+    function sendOrder() {
+        const formBaseId = "1FAIpQLSdMI2h80gYNFO3_B3sKCtlwEN3uaWuSccXyUc61bM33KBaITA"; 
+        const entryId = "entry.1177222909"; 
+
+        const targetUrl = `https://docs.google.com/forms/d/e/${formBaseId}/viewform?usp=pp_url&${entryId}=${encodeURIComponent(summaryText)}`;
+        window.open(targetUrl, '_blank');
+    }
+
+    renderProducts();
+</script>
+
+</body>
+</html>
