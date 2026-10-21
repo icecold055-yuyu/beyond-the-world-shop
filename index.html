@@ -102,7 +102,22 @@
     </section>
 
     <section class="panel result-panel">
+            <h2 class="panel-title">🎁 個人滿額贈</h2>
+      <div class="result-line">
+        <span>明信片（每滿 ¥98 贈 1 張，最多 4 張）</span>
+        <strong id="postcardGiftDisplay">0 張</strong>
+      </div>
+      <div class="result-line">
+        <span>角色杯墊（每滿 ¥198 贈 1 個，最多 4 個）</span>
+        <strong id="coasterGiftDisplay">0 個</strong>
+      </div>
+      <p class="fee-note">贈品資格依個人商品人民幣總額計算，兩種贈品可同時獲得。</p>
+      <div id="coasterRoleOptions"></div>
+    </section>
+
+    <section class="panel result-panel">
       <h2 class="panel-title">訂單金額試算</h2>
+      
       <div class="result-line"><span>商品總額（人民幣）</span><strong id="totalRmb">¥ 0</strong></div>
       <div class="result-line"><span>匯率換算（人民幣 × 5.1）</span><strong id="convertedPrice">NT$ 0</strong></div>
       <div class="result-line"><span>代購+國際運費級距費</span><strong id="serviceFee">NT$ 0</strong></div>
@@ -226,6 +241,53 @@
 
     const characters = ["顧時夜", "易遇", "柏源", "夏蕭因"];
     let summaryText = "";
+    
+    const NOT_ELIGIBLE = "未達資格／不適用";
+    let coasterGiftRoles = Array(4).fill(NOT_ELIGIBLE);
+    let renderedCoasterQty = -1;
+
+    function updateGiftUI(totalRmb) {
+      const postcardQty = Math.min(4, Math.floor(totalRmb / 98));
+      const coasterQty = Math.min(4, Math.floor(totalRmb / 198));
+
+      document.getElementById("postcardGiftDisplay").textContent =
+        `${postcardQty} 張`;
+
+      document.getElementById("coasterGiftDisplay").textContent =
+        `${coasterQty} 個`;
+
+      // 只有杯墊數量改變時，才重新建立角色選單
+      if (coasterQty !== renderedCoasterQty) {
+        for (let i = coasterQty; i < 4; i++) {
+          coasterGiftRoles[i] = NOT_ELIGIBLE;
+        }
+
+        const container = document.getElementById("coasterRoleOptions");
+
+        container.innerHTML = coasterQty === 0
+          ? '<p class="fee-note">商品總額滿 ¥198 後，即可選擇杯墊角色。</p>'
+          : `
+            <p><strong>請選擇每個杯墊的角色：</strong></p>
+            ${Array.from({ length: coasterQty }, (_, i) => `
+              <div class="result-line">
+                <label for="coasterRole${i}">第 ${i + 1} 個杯墊</label>
+                <select id="coasterRole${i}"
+                  onchange="coasterGiftRoles[${i}] = this.value">
+                  ${characters.map(char => `
+                    <option value="${char}"
+                      ${coasterGiftRoles[i] === char ? "selected" : ""}>
+                      ${char}
+                    </option>
+                  `).join("")}
+                </select>
+              </div>
+            `).join("")}
+          `;
+
+        renderedCoasterQty = coasterQty;
+      }
+    }
+
     const money = value => `NT$ ${Math.round(value).toLocaleString("zh-TW")}`;
 
     function renderProducts() {
@@ -277,6 +339,7 @@
 
       const cart = document.getElementById("cartDetailsList");
       const btn = document.getElementById("orderBtn");
+      updateGiftUI(totalRmb);
       if (totalRmb === 0) {
         cart.innerHTML = '<span class="empty">尚未選擇任何商品</span>';
         ["totalRmb", "convertedPrice", "serviceFee", "totalPrice", "depositPrice", "balancePrice", "checkSum"].forEach(id => {
@@ -358,6 +421,10 @@
     usp: "pp_url",
     "entry.1199050091": formPaymentMethod,
     "entry.494261708": "了解！",
+    "entry.900757477": coasterGiftRoles[0] || NOT_ELIGIBLE,
+    "entry.559294911": coasterGiftRoles[1] || NOT_ELIGIBLE,
+    "entry.852274432": coasterGiftRoles[2] || NOT_ELIGIBLE,
+    "entry.1309454476": coasterGiftRoles[3] || NOT_ELIGIBLE,
     "entry.1119876029": summaryText
   });
 
