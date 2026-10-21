@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>【世界之外】天若有情 / 舊影時敘代購下單</title>
+  <title>【世界之外】棲雲志異 / 秋日映像代購下單</title>
   <style>
     * { box-sizing: border-box; }
     :root {
@@ -91,7 +91,7 @@
 </head>
 <body>
   <main class="container">
-    <h1>【世界之外】天若有情 / 舊影時敘代購下單</h1>
+    <h1>【世界之外】棲雲志異 / 秋日映像代購下單</h1>
     <p class="intro">請選擇各角色數量，確認商品明細與付款方式後再送出訂單。</p>
 
     <div id="itemList"></div>
@@ -143,16 +143,87 @@
 
   <script>
     const products = [
-      { sort: 1, name: "【預售】世界之外 舊影時敘常駐系列 橢圓徽章", price: 16, img: "https://i.postimg.cc/sfpmtn2t/378017-0.jpg" },
-      { sort: 2, name: "【預售】世界之外 舊影時敘常駐系列 合影套組", price: 28, img: "https://i.ibb.co/20vKC8NZ/378018-0.jpg" },
-      { sort: 3, name: "【預售】世界之外 舊影時敘常駐系列 角色立牌", price: 69, img: "https://i.ibb.co/JFKfz9v9/378021-0.jpg" },
-      { sort: 4, name: "【預售】世界之外 天若有情常駐系列 馬口鐵徽章", price: 16, img: "https://i.ibb.co/BV8v0Q61/378014-0.jpg" },
-      { sort: 5, name: "【預售】世界之外 天若有情常駐系列 壓克力掛件", price: 35, img: "https://i.ibb.co/JjjJnyMy/378015-0.jpg" },
-      { sort: 6, name: "【預售】世界之外 天若有情常駐系列 相框擺件", price: 75, img: "https://i.ibb.co/JRtG58k8/378020-0.jpg" },
-      { sort: 7, name: "【預售】世界之外 天若有情常駐系列 資料夾", price: 19, img: "https://i.ibb.co/5W5xLxgc/378019-0.jpg" },
-      { sort: 8, name: "【預售】世界之外 天若有情常駐系列 鐳射票", price: 10, img: "https://i.ibb.co/r2KMSMNh/378022-0.jpg" },
-      { sort: 9, name: "【預售】世界之外 天若有情常駐系列 側影卡套組", price: 20, img: "https://i.ibb.co/3mW3X8x0/378023-0.jpg" }
-    ];
+
+  {
+    sort: 1,
+    name: "【預售】世界之外 棲雲志異系列 啵啵香氛玩偶",
+    price: 149,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-01.jpg"
+  },
+  {
+    sort: 2,
+    name: "【預售】世界之外 棲雲志異系列 擦手巾",
+    price: 49,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-02.jpg"
+  },
+  {
+    sort: 3,
+    name: "【預售】世界之外 棲雲志異系列 毛絨髮圈",
+    price: 55,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-03.jpg"
+  },
+  {
+    sort: 4,
+    name: "【預售】世界之外 棲雲志異系列 門掛",
+    price: 45,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-04.jpg"
+  },
+  {
+    sort: 5,
+    name: "【預售】世界之外 棲雲志異系列 啵啵收納包",
+    price: 89,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-05.jpg"
+  },
+  {
+    sort: 6,
+    name: "【預售】世界之外 棲雲志異系列 溫變悠遊杯",
+    price: 59,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-06.jpg"
+  },
+  {
+    sort: 7,
+    name: "【預售】世界之外 棲雲志異系列 光柵徽章",
+    price: 16,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-07.jpg"
+  },
+  {
+    sort: 8,
+    name: "【預售】世界之外 棲雲志異系列 折頁鐳射票",
+    price: 12,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-08.jpg"
+  },
+  {
+    sort: 9,
+    name: "【預售】世界之外 棲雲志異系列 雲霧小卡",
+    price: 6,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-09.jpg"
+  },
+  {
+    sort: 10,
+    name: "【預售】世界之外 棲雲志異系列 注油擺件",
+    price: 68,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-10.jpg"
+  },
+  {
+    sort: 11,
+    name: "【預售】世界之外 秋日映像系列 小豆人",
+    price: 89,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-11.jpg"
+  },
+  {
+    sort: 12,
+    name: "【預售】世界之外 秋日映像系列 秋日打卡棒",
+    price: 28,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-12.jpg"
+  },
+  {
+    sort: 13,
+    name: "【預售】世界之外 秋日映像系列 楓葉書籤",
+    price: 10,
+    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-13.jpg"
+  }
+];
+
     const characters = ["顧時夜", "易遇", "柏源", "夏蕭因"];
     let summaryText = "";
     const money = value => `NT$ ${Math.round(value).toLocaleString("zh-TW")}`;
