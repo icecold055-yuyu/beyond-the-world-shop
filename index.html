@@ -1,367 +1,284 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>【世界之外】天若有情 / 舊影時敘代購清單</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            max-width: 680px;
-            margin: 20px auto;
-            padding: 15px;
-            background-color: #f4f6f8;
-            color: #333;
-        }
-        .container {
-            background: #ffffff;
-            padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.06);
-        }
-        h2 {
-            text-align: center;
-            color: #2c3e50;
-            margin-bottom: 25px;
-            border-bottom: 2px solid #e9ecef;
-            padding-bottom: 12px;
-            font-size: 1.5em;
-        }
-        .item-card {
-            margin-bottom: 30px;
-            padding-bottom: 25px;
-            border-bottom: 1px dashed #ced4da;
-        }
-        .item-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 12px;
-        }
-        .item-title {
-            font-weight: bold;
-            font-size: 1.2em;
-            color: #1a252f;
-            line-height: 1.4;
-        }
-        .item-price {
-            color: #d9534f;
-            font-weight: bold;
-            font-size: 1.3em;
-            white-space: nowrap;
-            margin-left: 10px;
-        }
-        /* 滿版大圖容器 */
-        .item-img-container {
-            width: 100%;
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .item-img {
-            width: 100%;
-            max-width: 500px;
-            height: auto;
-            border-radius: 10px;
-            border: 1px solid #e9ecef;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.08);
-        }
-        /* 角色選擇區域 (兩欄排版: 上2人, 下2人) */
-        .sub-items {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px 20px;
-            background: #fafafa;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid #f0f0f0;
-        }
-        .sub-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            font-size: 1.05em;
-        }
-        .sub-item label {
-            color: #333;
-            font-weight: 500;
-        }
-        .sub-item input {
-            width: 60px;
-            height: 36px;
-            padding: 2px 5px;
-            text-align: center;
-            border: 1px solid #ced4da;
-            border-radius: 6px;
-            font-size: 1.05em;
-        }
-
-        /* 試算與明細顯示區 */
-        .result-box {
-            background: #fff3cd;
-            border: 1px solid #ffeeba;
-            padding: 20px;
-            margin-top: 30px;
-            border-radius: 10px;
-        }
-        .cart-summary {
-            background: #ffffff;
-            border: 1px solid #ffe8a1;
-            border-radius: 6px;
-            padding: 12px 15px;
-            margin-bottom: 18px;
-            font-size: 0.95em;
-            line-height: 1.6;
-            color: #495057;
-        }
-        .cart-summary-title {
-            font-weight: bold;
-            color: #856404;
-            margin-bottom: 6px;
-            border-bottom: 1px dashed #ffe8a1;
-            padding-bottom: 4px;
-        }
-        .cart-item-line {
-            margin-bottom: 4px;
-            word-break: break-all;
-        }
-        .result-line {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
-            font-size: 1.05em;
-        }
-        .result-line.total {
-            margin-top: 5px;
-            padding-top: 10px;
-            border-top: 1px dashed #ffe8a1;
-        }
-        .price-highlight {
-            color: #c0392b;
-            font-size: 1.25em;
-            font-weight: bold;
-        }
-        .deposit-highlight {
-            color: #27ae60;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-        .balance-highlight {
-            color: #2980b9;
-            font-size: 1.25em;
-            font-weight: bold;
-        }
-        .bank-info {
-            background: #eef7ff;
-            padding: 18px;
-            border-radius: 8px;
-            border-left: 5px solid #007bff;
-            margin-top: 20px;
-            font-size: 1em;
-            line-height: 1.6;
-        }
-        .submit-btn {
-            width: 100%;
-            padding: 15px;
-            background-color: #28a745;
-            color: white;
-            border: none;
-            border-radius: 8px;
-            font-size: 1.15em;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 25px;
-            transition: background 0.2s;
-        }
-        .submit-btn:disabled {
-            background-color: #adb5bd;
-            cursor: not-allowed;
-        }
-
-        @media (max-width: 480px) {
-            .sub-items {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 10px;
-                padding: 10px;
-            }
-            .sub-item {
-                font-size: 0.95em;
-            }
-            .sub-item input {
-                width: 50px;
-                height: 32px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>【世界之外】天若有情 / 舊影時敘代購下單</title>
+  <style>
+    * { box-sizing: border-box; }
+    :root {
+      --ink: #263445;
+      --muted: #687586;
+      --line: #e2e8ef;
+      --blue: #416b91;
+      --blue-soft: #eef6fc;
+      --gold-soft: #fff8e6;
+      --green: #247b52;
+      --red: #b63e3e;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans TC", Arial, sans-serif;
+      max-width: 760px;
+      margin: 20px auto;
+      padding: 14px;
+      background: #f3f6f9;
+      color: #303a46;
+      line-height: 1.55;
+    }
+    .container {
+      background: #fff;
+      padding: clamp(16px, 4vw, 28px);
+      border-radius: 16px;
+      box-shadow: 0 5px 22px rgba(35, 55, 75, .07);
+    }
+    h1 {
+      color: var(--ink);
+      font-size: clamp(1.25rem, 4vw, 1.65rem);
+      text-align: center;
+      line-height: 1.4;
+      margin: 0 0 8px;
+    }
+    .intro { text-align: center; color: var(--muted); font-size: .92rem; margin: 0 0 24px; }
+    .item-card { padding: 18px 0 22px; border-bottom: 1px dashed #d5dde6; }
+    .item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .item-title { font-weight: 750; color: #263445; font-size: 1.03rem; line-height: 1.45; }
+    .item-price { color: #b63e3e; font-weight: 750; white-space: nowrap; font-size: 1.1rem; }
+    .item-img-container { text-align: center; margin: 10px 0 14px; }
+    .item-img { width: 100%; max-width: 500px; height: auto; border-radius: 10px; border: 1px solid var(--line); }
+    .sub-items { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; background: #f8fafc; padding: 13px; border-radius: 10px; border: 1px solid #edf0f4; }
+    .sub-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; }
+    .sub-item label { font-size: .95rem; }
+    .sub-item input { width: 66px; height: 38px; padding: 4px; text-align: center; border: 1px solid #cbd5df; border-radius: 8px; font-size: 1rem; background: #fff; }
+    .panel { border-radius: 12px; padding: 17px; margin-top: 20px; }
+    .cart-panel { background: #fffaf0; border: 1px solid #f2e4bd; }
+    .panel-title { font-weight: 800; color: var(--ink); margin: 0 0 10px; font-size: 1.05rem; }
+    .cart-list { font-size: .94rem; color: #4d5968; }
+    .cart-product { padding: 9px 0; border-bottom: 1px solid #f0e8d7; }
+    .cart-product:last-child { border-bottom: 0; }
+    .cart-product-name { font-weight: 750; color: #354354; }
+    .cart-variant { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 6px; }
+    .chip { background: #fff; border: 1px solid #e5d9bd; border-radius: 999px; padding: 2px 8px; font-size: .86rem; }
+    .empty { color: var(--muted); font-style: italic; }
+    .result-panel { background: #f8fafc; border: 1px solid var(--line); }
+    .result-line { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin: 9px 0; }
+    .result-line span:first-child { color: #536171; }
+    .result-line strong { text-align: right; white-space: nowrap; }
+    .result-line.total { border-top: 1px dashed #cbd5df; padding-top: 13px; margin-top: 13px; font-size: 1.12rem; }
+    .total strong { color: var(--red); font-size: 1.25rem; }
+    .deposit strong { color: var(--green); font-size: 1.13rem; }
+    .balance strong { color: var(--blue); font-size: 1.13rem; }
+    .fee-note { color: var(--muted); font-size: .86rem; margin: 12px 0 0; }
+    .payment-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+    .payment-option { display: block; cursor: pointer; border: 1px solid #d7e0e9; border-radius: 10px; padding: 12px; background: #fff; }
+    .payment-option:has(input:checked) { border-color: var(--blue); background: var(--blue-soft); box-shadow: 0 0 0 1px var(--blue) inset; }
+    .payment-option input { margin-right: 6px; accent-color: var(--blue); }
+    .payment-option strong { display: block; margin: 4px 0 2px; color: var(--ink); }
+    .payment-option small { color: var(--muted); display: block; line-height: 1.4; }
+    .bank-info { background: var(--blue-soft); border-left: 4px solid var(--blue); padding: 15px; border-radius: 8px; margin-top: 20px; line-height: 1.7; }
+    .bank-info .warning { color: var(--red); font-size: .9rem; font-weight: 650; }
+    .submit-btn { width: 100%; padding: 15px; background: #258453; color: #fff; border: 0; border-radius: 10px; font-size: 1.05rem; font-weight: 800; cursor: pointer; margin-top: 22px; }
+    .submit-btn:disabled { background: #aeb8c2; cursor: not-allowed; }
+    @media (max-width: 480px) {
+      body { margin: 0 auto; padding: 8px; }
+      .container { padding: 15px; border-radius: 12px; }
+      .sub-items { gap: 9px; padding: 10px; }
+      .sub-item label { font-size: .88rem; }
+      .sub-item input { width: 52px; height: 35px; }
+      .payment-options { grid-template-columns: 1fr; }
+      .result-line { gap: 8px; font-size: .95rem; }
+    }
+  </style>
 </head>
 <body>
-
-<div class="container">
-    <h2>【世界之外】天若有情 / 舊影時敘代購下單</h2>
+  <main class="container">
+    <h1>【世界之外】天若有情 / 舊影時敘代購下單</h1>
+    <p class="intro">請選擇各角色數量，確認商品明細與付款方式後再送出訂單。</p>
 
     <div id="itemList"></div>
 
-    <div class="result-box">
-        <div class="cart-summary">
-            <div class="cart-summary-title">🛒 已選擇商品明細：</div>
-            <div id="cartDetailsList" style="color: #6c757d; font-style: italic;">尚未選擇任何商品</div>
-        </div>
+    <section class="panel cart-panel" aria-live="polite">
+      <h2 class="panel-title">🛒 已選商品明細</h2>
+      <div id="cartDetailsList" class="cart-list"><span class="empty">尚未選擇任何商品</span></div>
+    </section>
 
-        <div class="result-line">
-            <span>訂單應付總金額：</span>
-            <span class="price-highlight" id="totalPrice">NT$ 0</span>
-        </div>
-        <div class="result-line">
-            <span>本次須匯款金額 (50% 訂金)：</span>
-            <span class="deposit-highlight" id="depositPrice">NT$ 0</span>
-        </div>
-        <div class="result-line">
-            <span>二補/餘款賣場金額：</span>
-            <span class="balance-highlight" id="balancePrice">NT$ 0</span>
-        </div>
-        <div class="result-line total">
-            <span style="font-size: 0.9em; color: #856404;">驗算檢查 (訂金 + 餘款)：</span>
-            <span style="font-size: 0.9em; font-weight: bold; color: #856404;" id="checkSum">NT$ 0</span>
-        </div>
-        <p style="font-size: 0.85em; color: #856404; margin: 10px 0 0 0;">
-            * 計算公式：(商品人民幣總額 × 5) + 40 運費服務費。<br>
-            * 訂金採用無條件捨去取整，餘款 = 總額 - 訂金，確保金額 100% 精確不重複收費。
-        </p>
-    </div>
+    <section class="panel result-panel">
+      <h2 class="panel-title">訂單金額試算</h2>
+      <div class="result-line"><span>商品總額（人民幣）</span><strong id="totalRmb">¥ 0</strong></div>
+      <div class="result-line"><span>匯率換算（人民幣 × 5）</span><strong id="convertedPrice">NT$ 0</strong></div>
+      <div class="result-line"><span>代購服務／國際運費級距費</span><strong id="serviceFee">NT$ 0</strong></div>
+      <div class="result-line total"><span>訂單應付總金額</span><strong id="totalPrice">NT$ 0</strong></div>
+      <p class="fee-note">級距加收：未滿 ¥150 加 NT$45；¥150～¥450（含）加 NT$65；超過 ¥450 加 NT$85。台灣境內運費由買家另外支付。</p>
+    </section>
+
+    <section class="panel result-panel">
+      <h2 class="panel-title">選擇付款方式</h2>
+      <div class="payment-options">
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="一般匯款" checked onchange="calculate()">
+          <strong>一般匯款</strong>
+          <small>前期款為總額的一半，無條件捨去至整數元。</small>
+        </label>
+        <label class="payment-option">
+          <input type="radio" name="paymentMethod" value="無卡／ATM 現金轉帳" onchange="calculate()">
+          <strong>無卡／ATM 現金轉帳</strong>
+          <small>前期款以總額一半為基準，四捨五入至最接近的整百元。</small>
+        </label>
+      </div>
+      <div class="result-line deposit" style="margin-top:16px"><span id="depositLabel">本次須匯款金額</span><strong id="depositPrice">NT$ 0</strong></div>
+      <div class="result-line balance"><span>後續貨到付款金額</span><strong id="balancePrice">NT$ 0</strong></div>
+      <div class="result-line"><span>驗算（前期款＋貨到付款）</span><strong id="checkSum">NT$ 0</strong></div>
+      <p id="paymentNote" class="fee-note">請依網站顯示的金額完成匯款。</p>
+    </section>
 
     <div class="bank-info">
-        <b>【匯款帳號資訊】</b><br>
-        銀行代碼：822 (中國信託)<br>
-        帳號：381540568093<br>
-        戶名：李易蓉<br>
-        <span style="color: #c0392b; font-size: 0.9em; font-weight: bold;">
-            * 請於填表後完成匯款，並於匯款備註留言世界之外，截圖上傳後續表單
-        </span>
+      <strong>【匯款帳號資訊】</strong><br>
+      銀行代碼：822（中國信託）<br>
+      帳號：381540568093<br>
+      戶名：李易蓉<br>
+      <div class="warning">＊請於填表後完成匯款，並於匯款備註留言「世界之外」，再依後續表單指示上傳匯款截圖。</div>
     </div>
 
     <button id="orderBtn" class="submit-btn" onclick="sendOrder()" disabled>請選擇商品數量</button>
-</div>
+  </main>
 
-<script>
+  <script>
     const products = [
-        { sort: 1, name: "【預售】世界之外 舊影時敘常駐系列 橢圓徽章", price: 16, img: "https://i.postimg.cc/sfpmtn2t/378017-0.jpg" },
-        { sort: 2, name: "【預售】世界之外 舊影時敘常駐系列 合影套組", price: 28, img: "https://i.ibb.co/20vKC8NZ/378018-0.jpg" },
-        { sort: 3, name: "【預售】世界之外 舊影時敘常駐系列 角色立牌", price: 69, img: "https://i.ibb.co/JFKfz9v9/378021-0.jpg" },
-        { sort: 4, name: "【預售】世界之外 天若有情常駐系列 馬口鐵徽章", price: 16, img: "https://i.ibb.co/BV8v0Q61/378014-0.jpg" },
-        { sort: 5, name: "【預售】世界之外 天若有情常駐系列 壓克力掛件", price: 35, img: "https://i.ibb.co/JjjJnyMy/378015-0.jpg" },
-        { sort: 6, name: "【預售】世界之外 天若有情常駐系列 相框擺件", price: 75, img: "https://i.ibb.co/JRtG58k8/378020-0.jpg" },
-        { sort: 7, name: "【預售】世界之外 天若有情常駐系列 資料夾", price: 19, img: "https://i.ibb.co/5W5xLxgc/378019-0.jpg" },
-        { sort: 8, name: "【預售】世界之外 天若有情常駐系列 鐳射票", price: 10, img: "https://i.ibb.co/r2KMSMNh/378022-0.jpg" },
-        { sort: 9, name: "【預售】世界之外 天若有情常駐系列 側影卡套組", price: 20, img: "https://i.ibb.co/3mW3X8x0/378023-0.jpg" }
+      { sort: 1, name: "【預售】世界之外 舊影時敘常駐系列 橢圓徽章", price: 16, img: "https://i.postimg.cc/sfpmtn2t/378017-0.jpg" },
+      { sort: 2, name: "【預售】世界之外 舊影時敘常駐系列 合影套組", price: 28, img: "https://i.ibb.co/20vKC8NZ/378018-0.jpg" },
+      { sort: 3, name: "【預售】世界之外 舊影時敘常駐系列 角色立牌", price: 69, img: "https://i.ibb.co/JFKfz9v9/378021-0.jpg" },
+      { sort: 4, name: "【預售】世界之外 天若有情常駐系列 馬口鐵徽章", price: 16, img: "https://i.ibb.co/BV8v0Q61/378014-0.jpg" },
+      { sort: 5, name: "【預售】世界之外 天若有情常駐系列 壓克力掛件", price: 35, img: "https://i.ibb.co/JjjJnyMy/378015-0.jpg" },
+      { sort: 6, name: "【預售】世界之外 天若有情常駐系列 相框擺件", price: 75, img: "https://i.ibb.co/JRtG58k8/378020-0.jpg" },
+      { sort: 7, name: "【預售】世界之外 天若有情常駐系列 資料夾", price: 19, img: "https://i.ibb.co/5W5xLxgc/378019-0.jpg" },
+      { sort: 8, name: "【預售】世界之外 天若有情常駐系列 鐳射票", price: 10, img: "https://i.ibb.co/r2KMSMNh/378022-0.jpg" },
+      { sort: 9, name: "【預售】世界之外 天若有情常駐系列 側影卡套組", price: 20, img: "https://i.ibb.co/3mW3X8x0/378023-0.jpg" }
     ];
-
     const characters = ["顧時夜", "易遇", "柏源", "夏蕭因"];
+    let summaryText = "";
+    const money = value => `NT$ ${Math.round(value).toLocaleString("zh-TW")}`;
 
     function renderProducts() {
-        const container = document.getElementById('itemList');
-        let html = '';
-
-        products.forEach(p => {
-            html += `
-                <div class="item-card">
-                    <div class="item-header">
-                        <span class="item-title">${p.sort}. ${p.name}</span>
-                        <span class="item-price">¥ ${p.price}</span>
-                    </div>
-                    
-                    <div class="item-img-container">
-                        <img src="${p.img}" alt="${p.name}" class="item-img">
-                    </div>
-
-                    <div class="sub-items">
-            `;
-
-            characters.forEach((char, cIdx) => {
-                const inputId = `p_${p.sort}_c_${cIdx}`;
-                html += `
-                    <div class="sub-item">
-                        <label for="${inputId}">${cIdx + 1}. ${char}</label>
-                        <input type="number" id="${inputId}" min="0" value="0" onchange="calculate()">
-                    </div>
-                `;
-            });
-
-            html += `
-                    </div>
-                </div>
-            `;
-        });
-
-        container.innerHTML = html;
+      const container = document.getElementById("itemList");
+      container.innerHTML = products.map(p => `
+        <section class="item-card">
+          <div class="item-header">
+            <div class="item-title">${p.sort}. ${p.name}</div>
+            <div class="item-price">¥ ${p.price}</div>
+          </div>
+          <div class="item-img-container">
+            <img src="${p.img}" alt="${p.name}" class="item-img" loading="lazy">
+          </div>
+          <div class="sub-items">
+            ${characters.map((char, cIdx) => {
+              const inputId = `p_${p.sort}_c_${cIdx}`;
+              return `<div class="sub-item">
+                <label for="${inputId}">${char}</label>
+                <input type="number" id="${inputId}" min="0" step="1" value="0" inputmode="numeric" onchange="validateQty(this); calculate()" oninput="validateQty(this); calculate()" aria-label="${p.name} - ${char}數量">
+              </div>`;
+            }).join("")}
+          </div>
+        </section>
+      `).join("");
     }
 
-    let summaryText = "";
+    function validateQty(input) {
+      const qty = Number.parseInt(input.value, 10);
+      if (!Number.isFinite(qty) || qty < 0) input.value = 0;
+      else input.value = qty;
+    }
 
     function calculate() {
-        let totalRmb = 0;
-        let selectedDetails = [];
-        let htmlDisplayDetails = [];
+      let totalRmb = 0;
+      const selectedProducts = [];
 
-        products.forEach(p => {
-            let itemCharDetails = [];
-            characters.forEach((char, cIdx) => {
-                const inputId = `p_${p.sort}_c_${cIdx}`;
-                const qty = parseInt(document.getElementById(inputId).value) || 0;
-                if (qty > 0) {
-                    totalRmb += p.price * qty;
-                    itemCharDetails.push(`${char}*${qty}`);
-                }
-            });
-            if (itemCharDetails.length > 0) {
-                selectedDetails.push(`${p.sort}. ${p.name} [${itemCharDetails.join(' ')}]`);
-                htmlDisplayDetails.push(`<div class="cart-item-line"><b>${p.sort}. ${p.name}</b>：${itemCharDetails.join(' ')}</div>`);
-            }
+      products.forEach(p => {
+        const variants = [];
+        characters.forEach((char, cIdx) => {
+          const input = document.getElementById(`p_${p.sort}_c_${cIdx}`);
+          const qty = Math.max(0, Number.parseInt(input.value, 10) || 0);
+          if (qty > 0) {
+            totalRmb += p.price * qty;
+            variants.push({ name: char, qty });
+          }
         });
+        if (variants.length) selectedProducts.push({ product: p, variants });
+      });
 
-        const btn = document.getElementById('orderBtn');
-        const cartDisplay = document.getElementById('cartDetailsList');
+      const cart = document.getElementById("cartDetailsList");
+      const btn = document.getElementById("orderBtn");
+      if (totalRmb === 0) {
+        cart.innerHTML = '<span class="empty">尚未選擇任何商品</span>';
+        ["totalRmb", "convertedPrice", "serviceFee", "totalPrice", "depositPrice", "balancePrice", "checkSum"].forEach(id => {
+          document.getElementById(id).textContent = id === "totalRmb" ? "¥ 0" : "NT$ 0";
+        });
+        document.getElementById("depositLabel").textContent = "本次須匯款金額";
+        document.getElementById("paymentNote").textContent = "請先選擇商品，再確認付款金額。";
+        summaryText = "";
+        btn.disabled = true;
+        btn.textContent = "請選擇商品數量";
+        return;
+      }
 
-        if (totalRmb === 0) {
-            cartDisplay.innerHTML = `<span style="color: #6c757d; font-style: italic;">尚未選擇任何商品</span>`;
-            document.getElementById('totalPrice').innerText = "NT$ 0";
-            document.getElementById('depositPrice').innerText = "NT$ 0";
-            document.getElementById('balancePrice').innerText = "NT$ 0";
-            document.getElementById('checkSum').innerText = "NT$ 0";
-            btn.disabled = true;
-            btn.innerText = "請選擇商品數量";
-            return;
-        }
+      cart.innerHTML = selectedProducts.map(({ product, variants }) => `
+        <div class="cart-product">
+          <div class="cart-product-name">${product.sort}. ${product.name}</div>
+          <div class="cart-variant">${variants.map(v => `<span class="chip">${v.name} × ${v.qty}</span>`).join("")}</div>
+        </div>
+      `).join("");
 
-        cartDisplay.innerHTML = htmlDisplayDetails.join('');
+      const convertedNTD = totalRmb * 5;
+      const fee = totalRmb < 150 ? 45 : (totalRmb <= 450 ? 65 : 85);
+      const totalNTD = Math.round(convertedNTD + fee);
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const half = totalNTD / 2;
+      const depositNTD = paymentMethod === "無卡／ATM 現金轉帳"
+        ? Math.round(half / 100) * 100
+        : Math.floor(half);
+      const balanceNTD = totalNTD - depositNTD;
 
-        const totalNTD = Math.round((totalRmb * 5) + 40);
-        const depositNTD = Math.floor(totalNTD / 2);
-        const balanceNTD = totalNTD - depositNTD;
+      document.getElementById("totalRmb").textContent = `¥ ${totalRmb.toLocaleString("zh-TW")}`;
+      document.getElementById("convertedPrice").textContent = money(convertedNTD);
+      document.getElementById("serviceFee").textContent = money(fee);
+      document.getElementById("totalPrice").textContent = money(totalNTD);
+      document.getElementById("depositPrice").textContent = money(depositNTD);
+      document.getElementById("balancePrice").textContent = money(balanceNTD);
+      document.getElementById("checkSum").textContent = money(depositNTD + balanceNTD);
+      document.getElementById("depositLabel").textContent = paymentMethod === "無卡／ATM 現金轉帳"
+        ? "本次無卡／ATM 應匯金額"
+        : "本次一般匯款金額";
+      document.getElementById("paymentNote").textContent = paymentMethod === "無卡／ATM 現金轉帳"
+        ? "無卡匯款已調整至最接近的整百元；差額已自動計入後續貨到付款。"
+        : "一般匯款前期款為總額的一半並無條件捨去至整數元；餘額由後續貨到付款補齊。";
 
-        document.getElementById('totalPrice').innerText = `NT$ ${totalNTD.toLocaleString()}`;
-        document.getElementById('depositPrice').innerText = `NT$ ${depositNTD.toLocaleString()}`;
-        document.getElementById('balancePrice').innerText = `NT$ ${balanceNTD.toLocaleString()}`;
-        document.getElementById('checkSum').innerText = `NT$ ${(depositNTD + balanceNTD).toLocaleString()}`;
+      const detailText = selectedProducts.map(({ product, variants }) =>
+        `${product.sort}. ${product.name}（¥${product.price}）— ${variants.map(v => `${v.name}×${v.qty}`).join("、")}`
+      ).join("\n");
+      summaryText =
+        `【世界之外代購訂單】\n${detailText}\n` +
+        `【商品總額】¥${totalRmb}\n` +
+        `【匯率換算】NT$${convertedNTD}\n` +
+        `【級距加收（服務費／國際運費補貼）】NT$${fee}\n` +
+        `【訂單應付總額】NT$${totalNTD}\n` +
+        `【付款方式】${paymentMethod}\n` +
+        `【本次應匯金額】NT$${depositNTD}\n` +
+        `【後續貨到付款】NT$${balanceNTD}\n` +
+        `【驗算】NT$${depositNTD + balanceNTD}\n` +
+        `【備註】台灣境內運費由買家另外支付。`;
 
-        summaryText = `【購買明細】${selectedDetails.join(' | ')} ｜ 【總額】NT$${totalNTD} ｜ 【本次匯款訂金】NT$${depositNTD} ｜ 【二補餘款賣場】NT$${balanceNTD}`;
-
-        btn.disabled = false;
-        btn.innerText = "確認訂單，前往上傳匯款截圖";
+      btn.disabled = false;
+      btn.textContent = "確認訂單，前往上傳匯款截圖";
     }
 
     function sendOrder() {
-        const formBaseId = "1FAIpQLSdMI2h80gYNFO3_B3sKCtlwEN3uaWuSccXyUc61bM33KBaITA"; 
-        const entryId = "entry.1177222909"; 
-
-        const targetUrl = `https://docs.google.com/forms/d/e/${formBaseId}/viewform?usp=pp_url&${entryId}=${encodeURIComponent(summaryText)}`;
-        window.open(targetUrl, '_blank');
+      if (!summaryText) return;
+      const formBaseId = "1FAIpQLSdMI2h80gYNFO3_B3sKCtlwEN3uaWuSccXyUc61bM33KBaITA";
+      const entryId = "entry.1177222909";
+      const targetUrl = `https://docs.google.com/forms/d/e/${formBaseId}/viewform?usp=pp_url&${entryId}=${encodeURIComponent(summaryText)}`;
+      window.open(targetUrl, "_blank", "noopener");
     }
 
     renderProducts();
-</script>
-
+    calculate();
+  </script>
 </body>
 </html>
