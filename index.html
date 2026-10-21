@@ -135,7 +135,7 @@
       銀行代碼：822（中國信託）<br>
       帳號：381540568093<br>
       戶名：李易蓉<br>
-      <div class="warning">＊請於填表後完成匯款，並於匯款備註留言「世界之外」，再依後續表單指示上傳匯款截圖。</div>
+      <div class="warning">＊請於填表後完成匯款，並於匯款備註留言「世界之外」，後續再提供給我匯款圖。</div>
     </div>
 
     <button id="orderBtn" class="submit-btn" onclick="sendOrder()" disabled>請選擇商品數量</button>
@@ -269,16 +269,40 @@
       btn.textContent = "確認訂單，前往上傳匯款截圖";
     }
 
-    function sendOrder() {
-      if (!summaryText) return;
-      const formBaseId = "1FAIpQLSdMI2h80gYNFO3_B3sKCtlwEN3uaWuSccXyUc61bM33KBaITA";
-      const entryId = "entry.1177222909";
-      const targetUrl = `https://docs.google.com/forms/d/e/${formBaseId}/viewform?usp=pp_url&${entryId}=${encodeURIComponent(summaryText)}`;
-      window.open(targetUrl, "_blank", "noopener");
-    }
+  function sendOrder() {
+  if (!summaryText) return;
 
-    renderProducts();
-    calculate();
+  const nickname = window.prompt("請輸入你的社群內暱稱：");
+  if (nickname === null) return;
+
+  if (!nickname.trim()) {
+    alert("請填寫社群內暱稱，才能繼續填單。");
+    return;
+  }
+
+  const formBaseId = "1FAIpQLSfHgAusshqJQndrTPb_s7pMPa2ikFtpP278uTbgh9nG-lZFtw";
+
+  const paymentMethod = document.querySelector(
+    'input[name="paymentMethod"]:checked'
+  ).value;
+
+  // 將網站付款方式轉換成 Google 表單實際選項
+  const formPaymentMethod =
+    paymentMethod === "一般匯款" ? "匯款" : "無卡";
+
+  const params = new URLSearchParams({
+    usp: "pp_url",
+    "entry.1220732958": nickname.trim(),
+    "entry.1199050091": formPaymentMethod,
+    "entry.494261708": "了解！",
+    "entry.1119876029": summaryText
+  });
+
+  const targetUrl =
+    `https://docs.google.com/forms/d/e/${formBaseId}/viewform?${params.toString()}`;
+
+  window.open(targetUrl, "_blank");
+}
   </script>
 </body>
 </html>
