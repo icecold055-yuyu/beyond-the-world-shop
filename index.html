@@ -273,12 +273,16 @@
                 <label for="coasterRole${i}">第 ${i + 1} 個杯墊</label>
                 <select id="coasterRole${i}"
                   onchange="coasterGiftRoles[${i}] = this.value">
-                  ${characters.map(char => `
-                    <option value="${char}"
-                      ${coasterGiftRoles[i] === char ? "selected" : ""}>
-                      ${char}
-                    </option>
-                  `).join("")}
+<option value="" disabled
+  ${!characters.includes(coasterGiftRoles[i]) ? "selected" : ""}>
+  請選擇角色
+</option>
+${characters.map(char => `
+  <option value="${char}"
+    ${coasterGiftRoles[i] === char ? "selected" : ""}>
+    ${char}
+  </option>
+`).join("")}
                 </select>
               </div>
             `).join("")}
@@ -404,6 +408,24 @@
     }
 
   function sendOrder() {
+    const coasterQty = Math.min(
+  4,
+  Math.floor(
+    products.reduce((sum, p) => {
+      return sum + p.price * characters.reduce((qty, char, cIdx) => {
+        const input = document.getElementById(`p_${p.sort}_c_${cIdx}`);
+        return qty + (Math.max(0, Number.parseInt(input.value, 10) || 0));
+      }, 0);
+    }, 0) / 198
+  )
+);
+
+for (let i = 0; i < coasterQty; i++) {
+  if (!characters.includes(coasterGiftRoles[i])) {
+    alert(`請選擇第 ${i + 1} 個杯墊的角色！`);
+    return;
+  }
+}
 
   if (!summaryText) return;
 
