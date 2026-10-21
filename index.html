@@ -378,18 +378,6 @@
   const formPaymentMethod =
     paymentMethod === "一般匯款" ? "匯款" : "無卡";
 
-  const params = new URLSearchParams({
-    usp: "pp_url",
-    "entry.1220732958": nickname.trim(),
-    "entry.1199050091": formPaymentMethod,
-    "entry.494261708": "了解！",
-    "entry.1119876029": summaryText
-  });
-
-  const targetUrl =
-    `https://docs.google.com/forms/d/e/${formBaseId}/viewform?${params.toString()}`;
-
-  window.open(targetUrl, "_blank");
 }
 renderProducts();
 calculate();
