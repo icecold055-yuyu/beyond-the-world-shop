@@ -297,8 +297,8 @@
         </div>
       `).join("");
 
-      const convertedNTD = totalRmb * 5;
-      const fee = totalRmb < 150 ? 45 : (totalRmb <= 450 ? 65 : 85);
+      const convertedNTD = totalRmb * 5.1;
+      const fee = totalRmb < 150 ? 45 : (totalRmb <= 400 ? 65 : 85);
       const totalNTD = Math.round(convertedNTD + fee);
       const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
       const half = totalNTD / 2;
