@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>【世界之外】棲雲志異 / 秋日映像代購下單</title>
+  <title>【世界之外】飛鴻逐光｜顧時夜生日周邊代購</title>
   <style>
     * { box-sizing: border-box; }
     :root {
@@ -42,22 +42,28 @@
     .item-card { padding: 18px 0 22px; border-bottom: 1px dashed #d5dde6; }
     .item-header { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
     .item-title { font-weight: 750; color: #263445; font-size: 1.03rem; line-height: 1.45; }
-    .item-price { color: #b63e3e; font-weight: 750; white-space: nowrap; font-size: 1.1rem; }
+    .item-price { color: var(--red); font-weight: 750; white-space: nowrap; font-size: 1.1rem; }
     .item-img-container { text-align: center; margin: 10px 0 14px; }
-    .item-img { width: 100%; max-width: 500px; height: auto; border-radius: 10px; border: 1px solid var(--line); }
-    .sub-items { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; background: #f8fafc; padding: 13px; border-radius: 10px; border: 1px solid #edf0f4; }
-    .sub-item { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 0; }
-    .sub-item label { font-size: .95rem; }
-    .sub-item input { width: 66px; height: 38px; padding: 4px; text-align: center; border: 1px solid #cbd5df; border-radius: 8px; font-size: 1rem; background: #fff; }
+    .image-placeholder {
+      width: 100%; max-width: 500px; min-height: 135px; margin: auto;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 10px; border: 1px dashed #cbd5df;
+      background: #f8fafc; color: #8a96a5; font-size: .9rem;
+    }
+    .quantity-row { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
+    .quantity-row label { color: #536171; font-size: .94rem; }
+    .quantity-row input {
+      width: 76px; height: 40px; padding: 4px; text-align: center;
+      border: 1px solid #cbd5df; border-radius: 8px; font-size: 1rem; background: #fff;
+    }
     .panel { border-radius: 12px; padding: 17px; margin-top: 20px; }
     .cart-panel { background: #fffaf0; border: 1px solid #f2e4bd; }
     .panel-title { font-weight: 800; color: var(--ink); margin: 0 0 10px; font-size: 1.05rem; }
     .cart-list { font-size: .94rem; color: #4d5968; }
-    .cart-product { padding: 9px 0; border-bottom: 1px solid #f0e8d7; }
+    .cart-product { padding: 9px 0; border-bottom: 1px solid #f0e8d7; display: flex; justify-content: space-between; gap: 12px; }
     .cart-product:last-child { border-bottom: 0; }
     .cart-product-name { font-weight: 750; color: #354354; }
-    .cart-variant { margin-top: 4px; display: flex; flex-wrap: wrap; gap: 6px; }
-    .chip { background: #fff; border: 1px solid #e5d9bd; border-radius: 999px; padding: 2px 8px; font-size: .86rem; }
+    .cart-product-qty { white-space: nowrap; }
     .empty { color: var(--muted); font-style: italic; }
     .result-panel { background: #f8fafc; border: 1px solid var(--line); }
     .result-line { display: flex; align-items: flex-start; justify-content: space-between; gap: 14px; margin: 9px 0; }
@@ -68,6 +74,8 @@
     .deposit strong { color: var(--green); font-size: 1.13rem; }
     .balance strong { color: var(--blue); font-size: 1.13rem; }
     .fee-note { color: var(--muted); font-size: .86rem; margin: 12px 0 0; }
+    .gift-panel { background: var(--gold-soft); border: 1px solid #f2e4bd; }
+    .gift-count { color: var(--green); font-size: 1.2rem; }
     .payment-options { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
     .payment-option { display: block; cursor: pointer; border: 1px solid #d7e0e9; border-radius: 10px; padding: 12px; background: #fff; }
     .payment-option:has(input:checked) { border-color: var(--blue); background: var(--blue-soft); box-shadow: 0 0 0 1px var(--blue) inset; }
@@ -81,9 +89,6 @@
     @media (max-width: 480px) {
       body { margin: 0 auto; padding: 8px; }
       .container { padding: 15px; border-radius: 12px; }
-      .sub-items { gap: 9px; padding: 10px; }
-      .sub-item label { font-size: .88rem; }
-      .sub-item input { width: 52px; height: 35px; }
       .payment-options { grid-template-columns: 1fr; }
       .result-line { gap: 8px; font-size: .95rem; }
     }
@@ -91,8 +96,8 @@
 </head>
 <body>
   <main class="container">
-    <h1>【世界之外】棲雲志異 / 秋日映像代購下單</h1>
-    <p class="intro">請選擇各角色數量，確認商品明細與付款方式後再送出訂單。</p>
+    <h1>【世界之外】飛鴻逐光｜顧時夜生日周邊代購</h1>
+    <p class="intro">請選擇各項商品數量，確認商品明細、滿額贈與付款金額後，再送出訂單。</p>
 
     <div id="itemList"></div>
 
@@ -101,26 +106,20 @@
       <div id="cartDetailsList" class="cart-list"><span class="empty">尚未選擇任何商品</span></div>
     </section>
 
-    <section class="panel result-panel">
-            <h2 class="panel-title">🎁 個人滿額贈</h2>
+    <section class="panel gift-panel">
+      <h2 class="panel-title">🎁 個人滿額贈</h2>
       <div class="result-line">
-        <span>明信片（每滿 ¥98 贈 1 張，最多 4 組）</span>
-        <strong id="postcardGiftDisplay">0 張</strong>
+        <span>郵票套組（每滿 ¥108 贈 1 套，最多 4 套）</span>
+        <strong id="giftDisplay" class="gift-count">0 套</strong>
       </div>
-      <div class="result-line">
-        <span>角色杯墊（每滿 ¥198 贈 1 個，最多 4 個）</span>
-        <strong id="coasterGiftDisplay">0 個</strong>
-      </div>
-      <p class="fee-note">贈品資格依個人商品人民幣總額計算，兩種贈品可同時獲得。</p>
-      <div id="coasterRoleOptions"></div>
+      <p class="fee-note">贈品資格依每位買家的個人商品人民幣總額計算，不累計不同買家的金額。</p>
     </section>
 
     <section class="panel result-panel">
       <h2 class="panel-title">訂單金額試算</h2>
-      
       <div class="result-line"><span>商品總額（人民幣）</span><strong id="totalRmb">¥ 0</strong></div>
       <div class="result-line"><span>匯率換算（人民幣 × 5.1）</span><strong id="convertedPrice">NT$ 0</strong></div>
-      <div class="result-line"><span>代購+國際運費級距費</span><strong id="serviceFee">NT$ 0</strong></div>
+      <div class="result-line"><span>代購＋國際運費級距費</span><strong id="serviceFee">NT$ 0</strong></div>
       <div class="result-line total"><span>訂單應付總金額</span><strong id="totalPrice">NT$ 0</strong></div>
       <p class="fee-note">級距加收：未滿 ¥150 加 NT$45；¥150～¥400（含）加 NT$65；超過 ¥400 加 NT$85。</p>
     </section>
@@ -129,12 +128,12 @@
       <h2 class="panel-title">選擇付款方式</h2>
       <div class="payment-options">
         <label class="payment-option">
-          <input type="radio" name="paymentMethod" value="一般匯款" checked onchange="calculate()">
+          <input type="radio" name="paymentMethod" value="匯款" checked onchange="calculate()">
           <strong>一般匯款</strong>
           <small>前期款為總額的一半，無條件捨去至整數元。</small>
         </label>
         <label class="payment-option">
-          <input type="radio" name="paymentMethod" value="無卡／ATM 現金轉帳" onchange="calculate()">
+          <input type="radio" name="paymentMethod" value="無卡" onchange="calculate()">
           <strong>無卡／ATM 現金轉帳</strong>
           <small>前期款以總額一半為基準，四捨五入至最接近的整百元。</small>
         </label>
@@ -142,7 +141,7 @@
       <div class="result-line deposit" style="margin-top:16px"><span id="depositLabel">本次須匯款金額</span><strong id="depositPrice">NT$ 0</strong></div>
       <div class="result-line balance"><span>後續貨到付款金額</span><strong id="balancePrice">NT$ 0</strong></div>
       <div class="result-line"><span>驗算（前期款＋貨到付款）</span><strong id="checkSum">NT$ 0</strong></div>
-      <p id="paymentNote" class="fee-note">請依網站顯示的金額完成匯款。</p>
+      <p id="paymentNote" class="fee-note">請先選擇商品，再確認付款金額。</p>
     </section>
 
     <div class="bank-info">
@@ -150,7 +149,7 @@
       銀行代碼：822（中國信託）<br>
       帳號：381540568093<br>
       戶名：李易蓉<br>
-      <div class="warning">＊請於填表後完成匯款，並於匯款備註留言「世界之外」，後續再提供給我匯款圖。</div>
+      <div class="warning">＊請於填表後完成匯款，並於匯款備註留言「飛鴻逐光」，後續再提供匯款截圖／相片。</div>
     </div>
 
     <button id="orderBtn" class="submit-btn" onclick="sendOrder()" disabled>請選擇商品數量</button>
@@ -158,139 +157,30 @@
 
   <script>
     const products = [
+      { sort: 1, name: "飛鴻逐光－禮盒", price: 169 },
+      { sort: 2, name: "馬口鐵徽章", price: 16 },
+      { sort: 3, name: "票根", price: 10 },
+      { sort: 4, name: "票夾", price: 16 },
+      { sort: 5, name: "紀念卡套組", price: 20 },
+      { sort: 6, name: "亞克力色紙（一段）", price: 36 },
+      { sort: 7, name: "亞克力色紙（二段）", price: 36 },
+      { sort: 8, name: "小卡套組", price: 22 },
+      { sort: 9, name: "流沙掛件", price: 49 },
+      { sort: 10, name: "角色立牌", price: 69 },
+      { sort: 11, name: "Q版馬口鐵徽章", price: 15 },
+      { sort: 12, name: "Q版定格卡", price: 18 },
+      { sort: 13, name: "Q版壓克力立牌", price: 39 }
+    ];
 
-  {
-    sort: 1,
-    name: "【預售】世界之外 棲雲志異系列 啵啵香氛玩偶",
-    price: 149,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-01.jpg"
-  },
-  {
-    sort: 2,
-    name: "【預售】世界之外 棲雲志異系列 擦手巾",
-    price: 49,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-02.jpg"
-  },
-  {
-    sort: 3,
-    name: "【預售】世界之外 棲雲志異系列 毛絨髮圈",
-    price: 55,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-03.jpg"
-  },
-  {
-    sort: 4,
-    name: "【預售】世界之外 棲雲志異系列 門掛",
-    price: 45,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-04.jpg"
-  },
-  {
-    sort: 5,
-    name: "【預售】世界之外 棲雲志異系列 啵啵收納包",
-    price: 89,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-05.jpg"
-  },
-  {
-    sort: 6,
-    name: "【預售】世界之外 棲雲志異系列 溫變悠遊杯",
-    price: 59,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-06.jpg"
-  },
-  {
-    sort: 7,
-    name: "【預售】世界之外 棲雲志異系列 光柵徽章",
-    price: 16,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-07.jpg"
-  },
-  {
-    sort: 8,
-    name: "【預售】世界之外 棲雲志異系列 折頁鐳射票",
-    price: 12,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-08.jpg"
-  },
-  {
-    sort: 9,
-    name: "【預售】世界之外 棲雲志異系列 雲霧小卡",
-    price: 6,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-09.jpg"
-  },
-  {
-    sort: 10,
-    name: "【預售】世界之外 棲雲志異系列 注油擺件",
-    price: 68,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-10.jpg"
-  },
-  {
-    sort: 11,
-    name: "【預售】世界之外 秋日映像系列 小豆人",
-    price: 89,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-11.jpg"
-  },
-  {
-    sort: 12,
-    name: "【預售】世界之外 秋日映像系列 秋日打卡棒",
-    price: 28,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-12.jpg"
-  },
-  {
-    sort: 13,
-    name: "【預售】世界之外 秋日映像系列 楓葉書籤",
-    price: 10,
-    img: "https://raw.githubusercontent.com/icecold055-yuyu/beyond-the-world-shop/refs/heads/main/images/product-13.jpg"
-  }
-];
+    const FORM_BASE_ID = "1FAIpQLSftjSalDePm8lGWAY37q2EtvVrjndcqeV06kRFc53bxyIWAXA";
+    const FORM_FIELDS = {
+      nickname: "entry.810911650",
+      payment: "entry.83269743",
+      receiptReminder: "entry.1890337050",
+      orderSummary: "entry.1797452826"
+    };
 
-    const characters = ["顧時夜", "易遇", "柏源", "夏蕭因"];
     let summaryText = "";
-    
-    const NOT_ELIGIBLE = "未達資格／不適用";
-    let coasterGiftRoles = Array(4).fill(NOT_ELIGIBLE);
-    let renderedCoasterQty = -1;
-
-    function updateGiftUI(totalRmb) {
-      const postcardQty = Math.min(4, Math.floor(totalRmb / 98));
-      const coasterQty = Math.min(4, Math.floor(totalRmb / 198));
-
-      document.getElementById("postcardGiftDisplay").textContent =
-        `${postcardQty} 張`;
-
-      document.getElementById("coasterGiftDisplay").textContent =
-        `${coasterQty} 個`;
-
-      // 只有杯墊數量改變時，才重新建立角色選單
-      if (coasterQty !== renderedCoasterQty) {
-        for (let i = coasterQty; i < 4; i++) {
-          coasterGiftRoles[i] = NOT_ELIGIBLE;
-        }
-
-        const container = document.getElementById("coasterRoleOptions");
-
-        container.innerHTML = coasterQty === 0
-          ? '<p class="fee-note">商品總額滿 ¥198 後，即可選擇杯墊角色。</p>'
-          : `
-            <p><strong>請選擇每個杯墊的角色：</strong></p>
-            ${Array.from({ length: coasterQty }, (_, i) => `
-              <div class="result-line">
-                <label for="coasterRole${i}">第 ${i + 1} 個杯墊</label>
-                <select id="coasterRole${i}"
-                  onchange="coasterGiftRoles[${i}] = this.value">
-<option value="" disabled
-  ${!characters.includes(coasterGiftRoles[i]) ? "selected" : ""}>
-  請選擇角色
-</option>
-${characters.map(char => `
-  <option value="${char}"
-    ${coasterGiftRoles[i] === char ? "selected" : ""}>
-    ${char}
-  </option>
-`).join("")}
-                </select>
-              </div>
-            `).join("")}
-          `;
-
-        renderedCoasterQty = coasterQty;
-      }
-    }
 
     const money = value => `NT$ ${Math.round(value).toLocaleString("zh-TW")}`;
 
@@ -303,16 +193,15 @@ ${characters.map(char => `
             <div class="item-price">¥ ${p.price}</div>
           </div>
           <div class="item-img-container">
-            <img src="${p.img}" alt="${p.name}" class="item-img" loading="lazy">
+            <div class="image-placeholder" aria-label="${p.name} 商品圖片尚未上架">
+              商品圖片準備中
+            </div>
           </div>
-          <div class="sub-items">
-            ${characters.map((char, cIdx) => {
-              const inputId = `p_${p.sort}_c_${cIdx}`;
-              return `<div class="sub-item">
-                <label for="${inputId}">${char}</label>
-                <input type="number" id="${inputId}" min="0" step="1" value="0" inputmode="numeric" onchange="validateQty(this); calculate()" oninput="validateQty(this); calculate()" aria-label="${p.name} - ${char}數量">
-              </div>`;
-            }).join("")}
+          <div class="quantity-row">
+            <label for="qty_${p.sort}">訂購數量</label>
+            <input type="number" id="qty_${p.sort}" min="0" step="1" value="0"
+              inputmode="numeric" oninput="validateQty(this); calculate()"
+              onchange="validateQty(this); calculate()" aria-label="${p.name} 訂購數量">
           </div>
         </section>
       `).join("");
@@ -324,31 +213,36 @@ ${characters.map(char => `
       else input.value = qty;
     }
 
-    function calculate() {
+    function getOrderData() {
       let totalRmb = 0;
       const selectedProducts = [];
 
       products.forEach(p => {
-        const variants = [];
-        characters.forEach((char, cIdx) => {
-          const input = document.getElementById(`p_${p.sort}_c_${cIdx}`);
-          const qty = Math.max(0, Number.parseInt(input.value, 10) || 0);
-          if (qty > 0) {
-            totalRmb += p.price * qty;
-            variants.push({ name: char, qty });
-          }
-        });
-        if (variants.length) selectedProducts.push({ product: p, variants });
+        const input = document.getElementById(`qty_${p.sort}`);
+        const qty = Math.max(0, Number.parseInt(input.value, 10) || 0);
+        if (qty > 0) {
+          totalRmb += p.price * qty;
+          selectedProducts.push({ product: p, qty });
+        }
       });
 
+      return { totalRmb, selectedProducts };
+    }
+
+    function calculate() {
+      const { totalRmb, selectedProducts } = getOrderData();
       const cart = document.getElementById("cartDetailsList");
       const btn = document.getElementById("orderBtn");
-      updateGiftUI(totalRmb);
+
+      document.getElementById("giftDisplay").textContent =
+        `${Math.min(4, Math.floor(totalRmb / 108))} 套`;
+
       if (totalRmb === 0) {
         cart.innerHTML = '<span class="empty">尚未選擇任何商品</span>';
-        ["totalRmb", "convertedPrice", "serviceFee", "totalPrice", "depositPrice", "balancePrice", "checkSum"].forEach(id => {
-          document.getElementById(id).textContent = id === "totalRmb" ? "¥ 0" : "NT$ 0";
+        ["convertedPrice", "serviceFee", "totalPrice", "depositPrice", "balancePrice", "checkSum"].forEach(id => {
+          document.getElementById(id).textContent = "NT$ 0";
         });
+        document.getElementById("totalRmb").textContent = "¥ 0";
         document.getElementById("depositLabel").textContent = "本次須匯款金額";
         document.getElementById("paymentNote").textContent = "請先選擇商品，再確認付款金額。";
         summaryText = "";
@@ -357,10 +251,10 @@ ${characters.map(char => `
         return;
       }
 
-      cart.innerHTML = selectedProducts.map(({ product, variants }) => `
+      cart.innerHTML = selectedProducts.map(({ product, qty }) => `
         <div class="cart-product">
-          <div class="cart-product-name">${product.sort}. ${product.name}</div>
-          <div class="cart-variant">${variants.map(v => `<span class="chip">${v.name} × ${v.qty}</span>`).join("")}</div>
+          <span class="cart-product-name">${product.sort}. ${product.name}</span>
+          <strong class="cart-product-qty">× ${qty}</strong>
         </div>
       `).join("");
 
@@ -369,10 +263,11 @@ ${characters.map(char => `
       const totalNTD = Math.round(convertedNTD + fee);
       const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
       const half = totalNTD / 2;
-      const depositNTD = paymentMethod === "無卡／ATM 現金轉帳"
+      const depositNTD = paymentMethod === "無卡"
         ? Math.round(half / 100) * 100
         : Math.floor(half);
       const balanceNTD = totalNTD - depositNTD;
+      const giftQty = Math.min(4, Math.floor(totalRmb / 108));
 
       document.getElementById("totalRmb").textContent = `¥ ${totalRmb.toLocaleString("zh-TW")}`;
       document.getElementById("convertedPrice").textContent = money(convertedNTD);
@@ -381,84 +276,52 @@ ${characters.map(char => `
       document.getElementById("depositPrice").textContent = money(depositNTD);
       document.getElementById("balancePrice").textContent = money(balanceNTD);
       document.getElementById("checkSum").textContent = money(depositNTD + balanceNTD);
-      document.getElementById("depositLabel").textContent = paymentMethod === "無卡／ATM 現金轉帳"
-        ? "本次無卡／ATM 應匯金額"
-        : "本次一般匯款金額";
-      document.getElementById("paymentNote").textContent = paymentMethod === "無卡／ATM 現金轉帳"
-        ? "無卡匯款已調整至最接近的整百元；差額已自動計入後續貨到付款。"
-        : "一般匯款前期款為總額的一半並無條件捨去至整數元；餘額由後續貨到付款補齊。";
+      document.getElementById("depositLabel").textContent =
+        paymentMethod === "無卡" ? "本次無卡／ATM 應匯金額" : "本次一般匯款金額";
+      document.getElementById("paymentNote").textContent =
+        paymentMethod === "無卡"
+          ? "無卡匯款已調整至最接近的整百元；差額已自動計入後續貨到付款。"
+          : "一般匯款前期款為總額的一半並無條件捨去至整數元；餘額由後續貨到付款補齊。";
 
-      const detailText = selectedProducts.map(({ product, variants }) =>
-        `${product.sort}. ${product.name}（¥${product.price}）— ${variants.map(v => `${v.name}×${v.qty}`).join("、")}`
+      const detailText = selectedProducts.map(({ product, qty }) =>
+        `${product.sort}. ${product.name}（¥${product.price}）× ${qty}`
       ).join("\n");
+
       summaryText =
-        `【世界之外代購訂單】\n${detailText}\n` +
+        `【世界之外代購訂單｜飛鴻逐光】\n${detailText}\n` +
         `【商品總額】¥${totalRmb}\n` +
+        `【郵票套組滿額贈】${giftQty} 套\n` +
         `【匯率換算】NT$${convertedNTD}\n` +
-        `【級距加收（服務費／海運費）】NT$${fee}\n` +
+        `【級距加收（代購服務費＋部分國際運費補貼）】NT$${fee}\n` +
         `【訂單應付總額】NT$${totalNTD}\n` +
-        `【付款方式】${paymentMethod}\n` +
+        `【付款方式】${paymentMethod === "無卡" ? "無卡／ATM 現金轉帳" : "一般匯款"}\n` +
         `【本次應匯金額】NT$${depositNTD}\n` +
         `【後續貨到付款】NT$${balanceNTD}\n` +
-        `【驗算】NT$${depositNTD + balanceNTD}\n` +
-        `【備註】無。`;
+        `【驗算】NT$${depositNTD + balanceNTD}`;
 
       btn.disabled = false;
       btn.textContent = "確認訂單，前往填寫表單";
     }
 
-  function sendOrder() {
-    const coasterQty = Math.min(
-  4,
-  Math.floor(
-    products.reduce((sum, p) => {
-      return sum + p.price * characters.reduce((qty, char, cIdx) => {
-        const input = document.getElementById(`p_${p.sort}_c_${cIdx}`);
-        return qty + (Math.max(0, Number.parseInt(input.value, 10) || 0));
-      }, 0);
-    }, 0) / 198
-  )
-);
+    function sendOrder() {
+      if (!summaryText) return;
 
-for (let i = 0; i < coasterQty; i++) {
-  if (!characters.includes(coasterGiftRoles[i])) {
-    alert(`請選擇第 ${i + 1} 個杯墊的角色！`);
-    return;
-  }
-}
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked').value;
+      const params = new URLSearchParams({
+        usp: "pp_url",
+        [FORM_FIELDS.payment]: paymentMethod,
+        [FORM_FIELDS.receiptReminder]: "了解!",
+        [FORM_FIELDS.orderSummary]: summaryText
+      });
 
-  if (!summaryText) return;
+      const targetUrl =
+        `https://docs.google.com/forms/d/e/${FORM_BASE_ID}/viewform?${params.toString()}`;
 
-  const formBaseId = "1FAIpQLSfHgAusshqJQndrTPb_s7pMPa2ikFtpP278uTbgh9nG-lZFtw";
+      window.location.href = targetUrl;
+    }
 
-  const paymentMethod = document.querySelector(
-    'input[name="paymentMethod"]:checked'
-  ).value;
-
-  // 將網站付款方式轉換成 Google 表單實際選項
-  const formPaymentMethod =
-    paymentMethod === "一般匯款" ? "匯款" : "無卡";
-
-  const params = new URLSearchParams({
-    usp: "pp_url",
-    "entry.1199050091": formPaymentMethod,
-    "entry.494261708": "了解！",
-    "entry.900757477": coasterGiftRoles[0] || NOT_ELIGIBLE,
-    "entry.559294911": coasterGiftRoles[1] || NOT_ELIGIBLE,
-    "entry.852274432": coasterGiftRoles[2] || NOT_ELIGIBLE,
-    "entry.1309454476": coasterGiftRoles[3] || NOT_ELIGIBLE,
-    "entry.1119876029": summaryText
-  });
-
-  const targetUrl =
-    `https://docs.google.com/forms/d/e/${formBaseId}/viewform?${params.toString()}`;
-
-  window.location.href = targetUrl;
-
-}
-renderProducts();
-calculate();
-    
+    renderProducts();
+    calculate();
   </script>
 </body>
 </html>
