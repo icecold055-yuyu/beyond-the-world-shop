@@ -52,9 +52,17 @@
     }
     .quantity-row { display: flex; justify-content: flex-end; align-items: center; gap: 10px; }
     .quantity-row label { color: #536171; font-size: .94rem; }
-    .quantity-row input {
-      width: 76px; height: 40px; padding: 4px; text-align: center;
-      border: 1px solid #cbd5df; border-radius: 8px; font-size: 1rem; background: #fff;
+    .quantity-control { display: inline-flex; align-items: center; gap: 10px; }
+    .qty-btn {
+      width: 40px; height: 40px; border: 1px solid #cbd5df; border-radius: 9px;
+      background: #fff; color: var(--blue); font-size: 1.35rem; font-weight: 700;
+      line-height: 1; cursor: pointer; touch-action: manipulation;
+    }
+    .qty-btn:active { background: var(--blue-soft); }
+    .qty-btn:disabled { color: #b5bec8; background: #f5f7f9; cursor: not-allowed; }
+    .quantity-value {
+      min-width: 28px; text-align: center; color: var(--ink);
+      font-size: 1.08rem; font-weight: 750; font-variant-numeric: tabular-nums;
     }
     .panel { border-radius: 12px; padding: 17px; margin-top: 20px; }
     .cart-panel { background: #fffaf0; border: 1px solid #f2e4bd; }
@@ -198,19 +206,25 @@
             </div>
           </div>
           <div class="quantity-row">
-            <label for="qty_${p.sort}">訂購數量</label>
-            <input type="number" id="qty_${p.sort}" min="0" step="1" value="0"
-              inputmode="numeric" oninput="validateQty(this); calculate()"
-              onchange="validateQty(this); calculate()" aria-label="${p.name} 訂購數量">
+            <label>訂購數量</label>
+            <div class="quantity-control">
+              <button type="button" class="qty-btn" id="minus_${p.sort}"
+                onclick="adjustQty(${p.sort}, -1)" aria-label="減少${p.name}數量" disabled>−</button>
+              <span class="quantity-value" id="qty_${p.sort}" aria-live="polite">0</span>
+              <button type="button" class="qty-btn" onclick="adjustQty(${p.sort}, 1)"
+                aria-label="增加${p.name}數量">＋</button>
+            </div>
           </div>
         </section>
       `).join("");
     }
 
-    function validateQty(input) {
-      const qty = Number.parseInt(input.value, 10);
-      if (!Number.isFinite(qty) || qty < 0) input.value = 0;
-      else input.value = qty;
+    function adjustQty(productSort, change) {
+      const quantityDisplay = document.getElementById(`qty_${productSort}`);
+      const nextQty = Math.max(0, Number.parseInt(quantityDisplay.textContent, 10) + change);
+      quantityDisplay.textContent = nextQty;
+      document.getElementById(`minus_${productSort}`).disabled = nextQty === 0;
+      calculate();
     }
 
     function getOrderData() {
@@ -218,8 +232,8 @@
       const selectedProducts = [];
 
       products.forEach(p => {
-        const input = document.getElementById(`qty_${p.sort}`);
-        const qty = Math.max(0, Number.parseInt(input.value, 10) || 0);
+        const display = document.getElementById(`qty_${p.sort}`);
+        const qty = Math.max(0, Number.parseInt(display.textContent, 10) || 0);
         if (qty > 0) {
           totalRmb += p.price * qty;
           selectedProducts.push({ product: p, qty });
